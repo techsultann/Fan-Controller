@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Fan Controller</string>
+    <string name="fan_off">OFF</string>
+    <string name="fan_low">LOW</string>
+    <string name="fan_medium">MEDIUM</string>
+    <string name="fan_high">HIGH</string>
+    <string name="fan_highest">HIGHEST</string>
+    <string name="fan_zero">0</string>
+    <string name="fan_one">1</string>
+    <string name="fan_two">2</string>
+    <string name="fan_three">3</string>
+    <string name="fan_four">4</string>
+</resources>
