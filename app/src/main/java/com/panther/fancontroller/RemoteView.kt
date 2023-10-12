@@ -13,32 +13,33 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
-enum class FanSpeed(val label: Int) {
-    OFF(R.string.fan_off),
-    LOW(R.string.fan_low),
-    MEDIUM(R.string.fan_medium),
-    HIGH(R.string.fan_high),
-    HIGHEST(R.string.fan_highest);
+enum class FanSpeed(val labelWord: Int, val labelNumber: Int ) {
+    OFF(R.string.fan_off, R.string.fan_zero),
+    LOW(R.string.fan_low, R.string.fan_one),
+    MEDIUM(R.string.fan_medium, R.string.fan_two),
+    HIGH(R.string.fan_high, R.string.fan_three),
+    HIGHEST(R.string.fan_highest, R.string.fan_four);
 
     fun next() = when(this) {
 
-        OFF -> OFF
-        LOW -> LOW
-        MEDIUM -> MEDIUM
-        HIGH -> HIGH
-        HIGHEST -> HIGHEST
+        OFF -> LOW
+        LOW -> MEDIUM
+        MEDIUM -> HIGH
+        HIGH -> HIGHEST
+        HIGHEST -> OFF
     }
 }
 
 private const val RADIUS_OFFSET_LABEL = 25
-private const val RADIUS_OFFSET_INDICATION = -25
+private const val RADIUS_OFFSET_INDICATION = -15
 
 class RemoteView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+    private var isTextMode = false
     private var radius = 0.0f // Radius of the fan circle
-    private var fanSpeed = FanSpeed.LOW //default fan speed
+    private var fanSpeed = FanSpeed.OFF //default fan speed
     private val pointPosition : PointF = PointF(0.0f, 0.0f) //This will be used to draw several of the views element
 
     private var lowColor = 0
@@ -61,7 +62,7 @@ class RemoteView @JvmOverloads constructor(
         if (super.performClick()) return true
 
         fanSpeed = fanSpeed.next()
-        contentDescription = resources.getString(fanSpeed.label)
+        contentDescription = resources.getString(fanSpeed.labelWord)
 
         invalidate()
         return true
@@ -114,13 +115,29 @@ class RemoteView @JvmOverloads constructor(
         for (i in FanSpeed.values()) {
             pointPosition.computeXYForSpeed(i, labelRadius)
 
-            val label = resources.getString(i.label)
+            val label = if(isTextMode) {
+                resources.getString(i.labelWord)
+            } else {
+                resources.getString(i.labelNumber)
+            }
+
             canvas?.drawText(label, pointPosition.x, pointPosition.y, paint)
         }
         super.onDraw(canvas)
     }
+    fun setTextMode(enabled: Boolean) {
+        isTextMode = enabled
+        invalidate()
+    }
+    fun getFanSpeed(): FanSpeed {
+        return fanSpeed
+    }
 
     fun updateToWords() {
+        fanSpeed = fanSpeed.next()
+        contentDescription = resources.getString(fanSpeed.labelWord)
+
+        invalidate()
 
     }
 

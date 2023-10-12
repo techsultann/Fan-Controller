@@ -8,19 +8,34 @@
 
 
     <com.panther.fancontroller.RemoteView
+        android:id="@+id/remoteView"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:color1="@color/black"
-        app:color4="#F3430C"
-        app:color3="#ED7C59"
-        app:color2="#E19780"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:color1="#E19780"
+        app:color2="#ED7C59"
+        app:color3="#F3430C"
+        app:color4="#431203"
+        app:layout_constraintBottom_toTopOf="@+id/btnSwitch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/btnSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:padding="12dp"
+        android:text="Switch priorities"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remoteView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
